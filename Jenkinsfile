@@ -4,7 +4,7 @@ pipeline {
   // None: khia báo agent khia chạy từng stage
   // khai báo ở đây thì chạy chung nguyên stage
 
-  environment{}
+  // environment{}
 
   stages{
     stage("TEST"){
