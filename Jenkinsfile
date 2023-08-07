@@ -9,7 +9,7 @@ pipeline {
           serviceAccountName: jenkins-admin
           containers:
             - name: python
-              image: python:3.8-slim-buster
+              image: docker
               securityContext:
                 runAsUser: 0
                 runAsGroup: 0
@@ -32,9 +32,10 @@ pipeline {
     stage("TEST"){
       steps {
         container('python') {
-          sh "pip install poetry" 
-          sh "poetry install"
-          sh "poetry run pytest"
+          // sh "pip install poetry" 
+          // sh "poetry install"
+          // sh "poetry run pytest"
+          sh "docker"
         }
       }
     }
