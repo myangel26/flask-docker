@@ -10,6 +10,9 @@ pipeline {
           containers:
             - name: docker
               image: busybox
+              command:
+              - cat
+              tty: true
               securityContext:
                 runAsUser: 0
                 runAsGroup: 0
