@@ -6,20 +6,7 @@ pipeline {
         apiVersion: v1
         kind: Pod
         spec:
-          serviceAccountName: jenkins-admin
-          containers:
-            - name: python
-              image: python:3.8-slim-buster
-              securityContext:
-                runAsUser: 0
-                runAsGroup: 0
-              volumeMounts:
-              - mountPath: /root/.cache
-                name: python-cache
-          volumes:
-            - name: python-cache
-            hostPath:
-              path: /tmp
+          
       '''
     }
   }
