@@ -36,11 +36,14 @@ pipeline {
     stage("TEST"){
       agent {
           docker {
-            image 'docker:latest'
+            image 'python:3.8-slim-buster'
+            args '-u 0:0 -v /tmp:/root/.cache -v /var/run/docker.sock:/var/run/docker.sock'
           }
       }
       steps {
-        sh "docker --version"
+        sh "pip install poetry"
+        sh "poetry install"
+        sh "poetry run pytest"
       }
       // steps {
       //   container('python') {
