@@ -13,13 +13,6 @@ pipeline {
               securityContext:
                 runAsUser: 0
                 runAsGroup: 0
-              volumeMounts:
-              - mountPath: /root/.cache
-                name: python-cache
-          volumes:
-            - name: python-cache
-              hostPath:
-                path: /tmp
       '''
     }
   }
