@@ -8,14 +8,21 @@ pipeline {
         spec:
           serviceAccountName: jenkins-admin
           containers:
-            - name: docker
-              image: busybox
+            - name: python
+              image: python:3.8-slim-buster
               command:
               - cat
               tty: true
               securityContext:
                 runAsUser: 0
                 runAsGroup: 0
+              volumeMounts:
+              - mountPath: /root/.cache
+                name: python-cache
+          volumes:
+            - name: python-cache
+              hostPath:
+                path: /tmp
       '''
     }
   }
@@ -27,11 +34,10 @@ pipeline {
   stages{
     stage("TEST"){
       steps {
-        container('docker') {
-          // sh "pip install poetry" 
-          // sh "poetry install"
-          // sh "poetry run pytest"
-          sh "echo 12222333"
+        container('python') {
+          sh "pip install poetry" 
+          sh "poetry install"
+          sh "poetry run pytest"
         }
       }
     }
