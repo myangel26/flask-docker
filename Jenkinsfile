@@ -18,8 +18,8 @@ pipeline {
                 name: python-cache
           volumes:
             - name: python-cache
-            hostPath:
-              path: /tmp
+              hostPath:
+                path: /tmp
       '''
     }
   }
