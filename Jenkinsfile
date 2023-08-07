@@ -8,7 +8,7 @@ pipeline {
         spec:
           serviceAccountName: jenkins-admin
           containers:
-            - name: python
+            - name: docker
               image: docker:latest
               securityContext:
                 runAsUser: 0
@@ -24,7 +24,7 @@ pipeline {
   stages{
     stage("TEST"){
       steps {
-        container('python') {
+        container('docker') {
           // sh "pip install poetry" 
           // sh "poetry install"
           // sh "poetry run pytest"
