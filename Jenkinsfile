@@ -9,7 +9,7 @@ pipeline {
           serviceAccountName: jenkins-admin
           containers:
             - name: python
-              image: docker
+              image: docker:latest
               securityContext:
                 runAsUser: 0
                 runAsGroup: 0
@@ -28,7 +28,7 @@ pipeline {
           // sh "pip install poetry" 
           // sh "poetry install"
           // sh "poetry run pytest"
-          sh "docker"
+          sh "echo 12222333"
         }
       }
     }
