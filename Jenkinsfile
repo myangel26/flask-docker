@@ -9,7 +9,7 @@ pipeline {
           serviceAccountName: jenkins-admin
           containers:
             - name: docker
-              image: docker:latest
+              image: busybox
               securityContext:
                 runAsUser: 0
                 runAsGroup: 0
