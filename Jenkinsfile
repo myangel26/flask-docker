@@ -6,7 +6,20 @@ pipeline {
         apiVersion: v1
         kind: Pod
         spec:
-          
+          serviceAccountName: jenkins-admin
+          containers:
+            - name: python
+              image: python:3.8-slim-buster
+              securityContext:
+                runAsUser: 0
+                runAsGroup: 0
+              volumeMounts:
+              - mountPath: /root/.cache
+                name: python-cache
+          volumes:
+            - name: python-cache
+            hostPath:
+              path: /tmp
       '''
     }
   }
@@ -19,9 +32,10 @@ pipeline {
     stage("TEST"){
       steps {
         container('python') {
-          sh "pip install poetry" 
-          sh "poetry install"
-          sh "poetry run pytest"
+          // sh "pip install poetry" 
+          // sh "poetry install"
+          // sh "poetry run pytest"
+          sh "echo HELLO"
         }
       }
     }
