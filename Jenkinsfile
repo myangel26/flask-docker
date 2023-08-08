@@ -1,9 +1,7 @@
 pipeline {
 
   agent {
-    agent {
-        docker { image 'node:18.17.0-alpine3.18' }
-    }
+    docker { image 'node:18.17.0-alpine3.18' }
     // kubernetes{
     //   yaml '''
     //     apiVersion: v1
