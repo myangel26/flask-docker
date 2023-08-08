@@ -1,7 +1,10 @@
 pipeline {
 
   agent {
-    docker { image 'node:18.17.0-alpine3.18' }
+    docker {
+            image 'python:3.8-slim-buster'
+            args '-u 0:0 -v /tmp:/root/.cache'
+          }
     // kubernetes{
     //   yaml '''
     //     apiVersion: v1
