@@ -4,9 +4,6 @@ pipeline {
     docker {
             image 'python:3.8-slim-buster'
             args '-u 0:0 -v /tmp:/root/.cache'
-            securityContext:
-              runAsUser: 0
-              runAsGroup: 0
           }
     // kubernetes{
     //   yaml '''
