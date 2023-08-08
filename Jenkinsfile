@@ -1,10 +1,10 @@
 pipeline {
-
-  agent {
-    docker {
-            image 'python:3.8-slim-buster'
-            args '-u 0:0 -v /tmp:/root/.cache'
-          }
+  agent none
+  // agent {
+    // docker {
+    //         image 'python:3.8-slim-buster'
+    //         args '-u 0:0 -v /tmp:/root/.cache'
+    //       }
     // kubernetes{
     //   yaml '''
     //     apiVersion: v1
@@ -29,7 +29,7 @@ pipeline {
     //             path: /tmp
     //   '''
     // }
-  }
+  // }
   // None: khia báo agent khia chạy từng stage
   // khai báo ở đây thì chạy chung nguyên stage
 
@@ -37,13 +37,16 @@ pipeline {
 
   stages{
     stage("TEST"){
-      steps {
-        container('python') {
-          sh "pip install poetry" 
-          sh "poetry install"
-          sh "poetry run pytest"
-        }
+      steps{
+        sh "id"
       }
+      // steps {
+      //   container('python') {
+      //     sh "pip install poetry" 
+      //     sh "poetry install"
+      //     sh "poetry run pytest"
+      //   }
+      // }
     }
   }
 
