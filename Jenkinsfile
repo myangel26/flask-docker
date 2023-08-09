@@ -33,7 +33,10 @@ pipeline {
   // None: khia báo agent khia chạy từng stage
   // khai báo ở đây thì chạy chung nguyên stage
 
-  // environment{}
+  environment {
+    DOCKER_IMAGE = "truongphamxuan/flask-docker",
+    CREDENTIAL_ID = "docker-account"
+  }
 
   stages{
     stage("TEST"){
@@ -53,6 +56,15 @@ pipeline {
       steps {
         container('docker'){
           sh "echo $DOCKER_TAG"
+          sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"
+          sh "docker image ls | grep ${DOCKER_IMAGE}"
+          withCredentials([usernamePassword(credentialsId: CREDENTIAL_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]){
+            // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            sh 'echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin'
+          }
+          // clean to save disk
+          sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
+          sh "docker image rm ${DOCKER_IMAGE}:latest"
         }
       }
     }
