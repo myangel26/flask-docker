@@ -62,6 +62,7 @@ pipeline {
       steps {
         container('docker'){
           sh "echo $DOCKER_TAG"
+          sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} . "
           sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"
           sh "docker image ls | grep ${DOCKER_IMAGE}"
           withCredentials([usernamePassword(credentialsId: CREDENTIAL_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]){
