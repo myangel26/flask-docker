@@ -55,7 +55,6 @@ pipeline {
           sh "echo $DOCKER_TAG"
         }
       }
-      }
     }
   }
 
