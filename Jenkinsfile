@@ -18,6 +18,11 @@ pipeline {
               volumeMounts:
               - mountPath: /root/.cache
                 name: python-cache
+            - name: docker
+              image: docker:latest
+              command:
+              - cat
+              tty: true
           volumes:
             - name: python-cache
               hostPath:
@@ -37,6 +42,17 @@ pipeline {
           sh "pip install poetry" 
           sh "poetry install"
           sh "poetry run pytest"
+        }
+      }
+    }
+
+    stage("BUILD") {
+      container('docker'){
+        environment {
+            DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
+          }
+        steps {
+          sh "echo $DOCKER_PASSWORD"
         }
       }
     }
