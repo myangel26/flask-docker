@@ -56,11 +56,12 @@ pipeline {
     }
 
     stage("BUILD") {
+      agent { node {label 'master'}}
       environment {
         DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
       }
       steps {
-        container('docker'){
+        // container('docker'){
           sh "echo $DOCKER_TAG"
           sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} . "
           sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"
@@ -72,7 +73,7 @@ pipeline {
           // clean to save disk
           sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
           sh "docker image rm ${DOCKER_IMAGE}:latest"
-        }
+        // }
       }
     }
   }
