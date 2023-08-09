@@ -12,9 +12,6 @@ pipeline {
               command:
               - cat
               tty: true
-              securityContext:
-                runAsUser: 0
-                runAsGroup: 0
               volumeMounts:
               - mountPath: /root/.cache
                 name: python-cache
@@ -26,6 +23,9 @@ pipeline {
               volumeMounts:
               - mountPath: /var/run/docker.sock
                 name: docker-sock
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
           volumes:
             - name: python-cache
               hostPath:
