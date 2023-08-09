@@ -6,9 +6,6 @@ pipeline {
         kind: Pod
         spec:
           serviceAccountName: jenkins-admin
-          dnsConfig:
-            nameservers:
-              - 8.8.8.8
           containers:
             - name: python
               image: python:3.8-slim-buster
@@ -26,9 +23,6 @@ pipeline {
               volumeMounts:
               - mountPath: /var/run/docker.sock
                 name: docker-sock
-          securityContext:
-            runAsUser: 0
-            runAsGroup: 0
           volumes:
             - name: python-cache
               hostPath:
@@ -65,7 +59,7 @@ pipeline {
       steps {
         container('docker'){
           sh "echo $DOCKER_TAG"
-          sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} . "
+          sh "docker build --network=host -t ${DOCKER_IMAGE}:${DOCKER_TAG} . "
           sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"
           sh "docker image ls | grep ${DOCKER_IMAGE}"
           withCredentials([usernamePassword(credentialsId: CREDENTIAL_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]){
