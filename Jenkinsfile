@@ -6,6 +6,9 @@ pipeline {
         kind: Pod
         spec:
           serviceAccountName: jenkins-admin
+          dnsConfig:
+            nameservers:
+              - 8.8.8.8
           containers:
             - name: python
               image: python:3.8-slim-buster
@@ -23,9 +26,6 @@ pipeline {
               volumeMounts:
               - mountPath: /var/run/docker.sock
                 name: docker-sock
-          securityContext:
-            runAsUser: 0
-            runAsGroup: 0
           volumes:
             - name: python-cache
               hostPath:
