@@ -59,6 +59,7 @@ pipeline {
       steps {
         container('docker'){
           sh "echo $DOCKER_TAG"
+          sh "docker network ls"
           sh "docker build --network=host -t ${DOCKER_IMAGE}:${DOCKER_TAG} . "
           sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"
           sh "docker image ls | grep ${DOCKER_IMAGE}"
