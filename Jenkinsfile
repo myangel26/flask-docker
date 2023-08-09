@@ -34,7 +34,7 @@ pipeline {
   // khai báo ở đây thì chạy chung nguyên stage
 
   environment {
-    DOCKER_IMAGE = "truongphamxuan/flask-docker",
+    DOCKER_IMAGE = "truongphamxuan/flask-docker"
     CREDENTIAL_ID = "docker-account"
   }
 
