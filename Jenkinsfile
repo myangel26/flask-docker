@@ -26,6 +26,9 @@ pipeline {
               volumeMounts:
               - mountPath: /var/run/docker.sock
                 name: docker-sock
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
           volumes:
             - name: python-cache
               hostPath:
