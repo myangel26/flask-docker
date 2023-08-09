@@ -47,13 +47,14 @@ pipeline {
     }
 
     stage("BUILD") {
-      container('docker'){
-        environment {
-            DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
-          }
-        steps {
-          sh "echo $DOCKER_PASSWORD"
+      environment {
+        DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
+      }
+      steps {
+        container('docker'){
+          sh "echo $DOCKER_TAG"
         }
+      }
       }
     }
   }
