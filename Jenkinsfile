@@ -74,6 +74,13 @@ pipeline {
         }
       }
     }
+
+    stage("DEPLOY") {
+      steps{
+        sh "kubectl --help"
+      }
+    }
+
   }
 
   post{
