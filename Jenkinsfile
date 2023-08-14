@@ -77,7 +77,9 @@ pipeline {
 
     stage("DEPLOY") {
       steps{
-        sh "kubectl --help"
+        withKubeConfig([credentialsId: '0790dbd1-7ff0-4a51-b4b7-1021bc973b69', serverUrl: 'https://192.168.112.131:6443']) {
+          sh 'kubectl apply -f my-kubernetes-directory'
+        }
       }
     }
 
