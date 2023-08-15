@@ -81,7 +81,6 @@ pipeline {
           sh 'curl -LO "https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl"'
           sh 'chmod u+x ./kubectl'
           sh './kubectl version'
-          sh './kubectl get all -A'
         }
       }
     }
@@ -89,9 +88,7 @@ pipeline {
     stage("DEPLOY") {
       steps{
           // sh 'kubectl apply -f my-kubernetes-directory'
-          withKubeConfig([credentialsId: 'kube-config']) {
-            sh 'kubectl get all -A'
-          }
+          sh './kubectl get all -A'
       }
     }
 
