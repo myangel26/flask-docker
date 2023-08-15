@@ -88,7 +88,7 @@ pipeline {
     stage("DEPLOY") {
       steps{
           // sh 'kubectl apply -f my-kubernetes-directory'
-          sh './kubectl apply -f deployment'
+          sh './kubectl apply -f deployment.yml'
       }
     }
 
