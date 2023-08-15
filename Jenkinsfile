@@ -75,12 +75,14 @@ pipeline {
       }
     }
 
-    stage("INSTALL KUBECTL"){
+    stage("INSTALL KUBECTL"){kube-config
       steps{
-        sh 'curl -LO "https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl"'
-        sh 'chmod u+x ./kubectl'
-        sh './kubectl version'
-        sh './kubectl get all -A'
+        withKubeConfig([credentialsId: 'kube-config']) {
+          sh 'curl -LO "https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl"'
+          sh 'chmod u+x ./kubectl'
+          sh './kubectl version'
+          sh './kubectl get all -A'
+        }
       }
     }
 
