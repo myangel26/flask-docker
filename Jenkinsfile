@@ -77,18 +77,17 @@ pipeline {
 
     stage("INSTALL KUBECTL"){
       steps{
-        withKubeConfig([credentialsId: '0790dbd1-7ff0-4a51-b4b7-1021bc973b69']) {
-            sh 'curl -LO "https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl"'
-            sh 'chmod u+x ./kubectl'
-            sh './kubectl version'
-        }
+        sh 'curl -LO "https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl"'
+        sh 'chmod u+x ./kubectl'
+        sh './kubectl version'
+        sh './kubectl get all -A'
       }
     }
 
     stage("DEPLOY") {
       steps{
           // sh 'kubectl apply -f my-kubernetes-directory'
-          sh './kubectl get all -A'
+          
       }
     }
 
