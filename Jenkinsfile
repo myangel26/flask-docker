@@ -75,10 +75,21 @@ pipeline {
       }
     }
 
+    stage("INSTALL KUBECTL"){
+      steps{
+        withKubeConfig([credentialsId: '0790dbd1-7ff0-4a51-b4b7-1021bc973b69']) {
+            sh 'curl -LO "https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl"'
+            sh 'chmod u+x ./kubectl'
+            sh './kubectl version'
+        }
+      }
+    }
+
     stage("DEPLOY") {
       steps{
         withKubeConfig([credentialsId: '0790dbd1-7ff0-4a51-b4b7-1021bc973b69', serverUrl: 'https://192.168.112.131:6443']) {
-          sh 'kubectl apply -f my-kubernetes-directory'
+          // sh 'kubectl apply -f my-kubernetes-directory'
+          sh 'kubectl get pods'
         }
       }
     }
