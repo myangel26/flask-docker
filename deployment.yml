@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flask-deployment #The name of the Kubernetes Deployment to be created in the Kubernetes cluster
+  namespace: flask-project
   labels:
     app: flask-app
 spec:
