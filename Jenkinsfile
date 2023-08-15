@@ -87,8 +87,10 @@ pipeline {
 
     stage("DEPLOY") {
       steps{
+        withKubeConfig([credentialsId: 'kube-config']) {
           // sh 'kubectl apply -f my-kubernetes-directory'
           sh './kubectl apply -f deployment.yml'
+        }
       }
     }
 
