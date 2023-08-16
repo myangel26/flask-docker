@@ -39,6 +39,7 @@ pipeline {
   environment {
     DOCKER_IMAGE = "truongphamxuan/flask-docker"
     CREDENTIAL_ID = "docker-account"
+    KUBERNETES_CONFIG = "kube-config"
   }
 
   stages{
@@ -77,7 +78,7 @@ pipeline {
 
     stage("INSTALL KUBECTL"){
       steps{
-        withKubeConfig([credentialsId: 'kube-config']) {
+        withKubeConfig([credentialsId: "${KUBERNETES_CONFIG}"]) {
           sh 'curl -LO "https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl"'
           sh 'chmod u+x ./kubectl'
           sh './kubectl version'
@@ -87,8 +88,7 @@ pipeline {
 
     stage("DEPLOY") {
       steps{
-        withKubeConfig([credentialsId: 'kube-config']) {
-          // sh 'kubectl apply -f my-kubernetes-directory'
+        withKubeConfig([credentialsId: "${KUBERNETES_CONFIG}"]) {
           sh './kubectl apply -f deployment.yml'
         }
       }
