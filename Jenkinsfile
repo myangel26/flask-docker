@@ -40,6 +40,7 @@ pipeline {
     DOCKER_IMAGE = "truongphamxuan/flask-docker"
     CREDENTIAL_ID = "docker-account"
     KUBERNETES_CONFIG = "kube-config"
+    NAMESPACE = "flask-project"
   }
 
   stages{
@@ -89,7 +90,8 @@ pipeline {
     stage("DEPLOY") {
       steps{
         withKubeConfig([credentialsId: "${KUBERNETES_CONFIG}"]) {
-          sh './kubectl apply -f deployment.yml'
+          // sh './kubectl apply -f deployment.yml'
+          sh "./kubectl set image deployment/flask-deployment -n ${NAMESPACE} flask-app=${DOCKER_IMAGE}:latest"
         }
       }
     }
