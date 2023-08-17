@@ -21,8 +21,3 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 5000 #The port for the python application   container
-        resources:
-            requests:
-              ephemeral-storage: 2Gi
-            limits:
-              ephemeral-storage: 4Gi
