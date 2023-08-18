@@ -41,6 +41,7 @@ pipeline {
     CREDENTIAL_ID = "docker-account"
     KUBERNETES_CONFIG = "kube-config"
     NAMESPACE = "flask-project"
+    DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
   }
 
   stages{
@@ -55,9 +56,6 @@ pipeline {
     }
 
     stage("BUILD") {
-      environment {
-        DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
-      }
       steps {
         container('docker'){
           sh "echo $DOCKER_TAG"
@@ -91,7 +89,7 @@ pipeline {
       steps{
         withKubeConfig([credentialsId: "${KUBERNETES_CONFIG}"]) {
           // sh './kubectl apply -f deployment.yml'
-          sh "./kubectl set image deployment.apps/flask-deployment -n ${NAMESPACE} flask-app=${DOCKER_IMAGE}:${DOCKER_TAG}"
+          sh "./kubectl set image deployment/flask-deployment -n ${NAMESPACE} flask-app=${DOCKER_IMAGE}:${DOCKER_TAG}"
         }
       }
     }
