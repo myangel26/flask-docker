@@ -15,11 +15,6 @@ pipeline {
               volumeMounts:
               - mountPath: /root/.cache
                 name: python-cache
-              resources:
-                requests:
-                  ephemeral-storage: 2Gi
-                limits:
-                  ephemeral-storage: 4Gi
             - name: docker
               image: docker:latest
               command:
