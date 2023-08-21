@@ -55,54 +55,54 @@ pipeline {
         }
     }
 
-    // stage("TEST"){
-    //   steps {
-    //     container('python') {
-    //       sh "pip install poetry" 
-    //       sh "poetry install"
-    //       sh "poetry run pytest"
-    //     }
-    //   }
-    // }
+    stage("TEST"){
+      steps {
+        container('python') {
+          sh "pip install poetry" 
+          sh "poetry install"
+          sh "poetry run pytest"
+        }
+      }
+    }
 
-    // stage("BUILD") {
-    //   steps {
-    //     container('docker'){
-    //       sh "echo $DOCKER_TAG"
-    //       sh "docker build --network=host -t ${DOCKER_IMAGE}:${DOCKER_TAG} . "
-    //       sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"
-    //       sh "docker image ls | grep ${DOCKER_IMAGE}"
-    //       withCredentials([usernamePassword(credentialsId: CREDENTIAL_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]){
-    //         // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-    //         sh 'echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin'
-    //         sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
-    //         sh "docker push ${DOCKER_IMAGE}:latest"
-    //       }
-    //       // clean to save disk
-    //       sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
-    //       sh "docker image rm ${DOCKER_IMAGE}:latest"
-    //     }
-    //   }
-    // }
+    stage("BUILD") {
+      steps {
+        container('docker'){
+          sh "echo $DOCKER_TAG"
+          sh "docker build --network=host -t ${DOCKER_IMAGE}:${DOCKER_TAG} . "
+          sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"
+          sh "docker image ls | grep ${DOCKER_IMAGE}"
+          withCredentials([usernamePassword(credentialsId: CREDENTIAL_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]){
+            // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            sh 'echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin'
+            sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
+            sh "docker push ${DOCKER_IMAGE}:latest"
+          }
+          // clean to save disk
+          sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
+          sh "docker image rm ${DOCKER_IMAGE}:latest"
+        }
+      }
+    }
 
-    // stage("INSTALL KUBECTL"){
-    //   steps{
-    //     withKubeConfig([credentialsId: "${KUBERNETES_CONFIG}"]) {
-    //       sh 'curl -LO "https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl"'
-    //       sh 'chmod u+x ./kubectl'
-    //       sh './kubectl version'
-    //     }
-    //   }
-    // }
+    stage("INSTALL KUBECTL"){
+      steps{
+        withKubeConfig([credentialsId: "${KUBERNETES_CONFIG}"]) {
+          sh 'curl -LO "https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl"'
+          sh 'chmod u+x ./kubectl'
+          sh './kubectl version'
+        }
+      }
+    }
 
-    // stage("DEPLOY") {
-    //   steps{
-    //     withKubeConfig([credentialsId: "${KUBERNETES_CONFIG}"]) {
-    //       // sh './kubectl apply -f deployment.yml'
-    //       sh "./kubectl set image deployment/flask-deployment -n ${NAMESPACE} flask-app=${DOCKER_IMAGE}:${DOCKER_TAG}"
-    //     }
-    //   }
-    // }
+    stage("DEPLOY") {
+      steps{
+        withKubeConfig([credentialsId: "${KUBERNETES_CONFIG}"]) {
+          // sh './kubectl apply -f deployment.yml'
+          sh "./kubectl set image deployment/flask-deployment -n ${NAMESPACE} flask-app=${DOCKER_IMAGE}:${DOCKER_TAG}"
+        }
+      }
+    }
 
   }
 
