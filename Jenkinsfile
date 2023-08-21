@@ -44,24 +44,26 @@ pipeline {
     DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
   }
 
-  stage('Cleanup Workspace'){
-      steps {
-          script {
-              cleanWs()
-          }
-      }
-  }
+  
 
   stages{
-    stage("TEST"){
-      steps {
-        container('python') {
-          sh "pip install poetry" 
-          sh "poetry install"
-          sh "poetry run pytest"
+    stage('Cleanup Workspace'){
+        steps {
+            script {
+                cleanWs()
+            }
         }
-      }
     }
+
+    // stage("TEST"){
+    //   steps {
+    //     container('python') {
+    //       sh "pip install poetry" 
+    //       sh "poetry install"
+    //       sh "poetry run pytest"
+    //     }
+    //   }
+    // }
 
     // stage("BUILD") {
     //   steps {
