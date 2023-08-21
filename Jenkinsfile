@@ -47,14 +47,6 @@ pipeline {
   
 
   stages{
-    // stage('Cleanup Workspace'){
-    //     steps {
-    //         script {
-    //             cleanWs()
-    //         }
-    //     }
-    // }
-
     stage("TEST"){
       steps {
         container('python') {
@@ -102,6 +94,14 @@ pipeline {
           sh "./kubectl set image deployment/flask-deployment -n ${NAMESPACE} flask-app=${DOCKER_IMAGE}:${DOCKER_TAG}"
         }
       }
+    }
+
+    stage('Cleanup Workspace'){
+        steps {
+            script {
+                cleanWs()
+            }
+        }
     }
 
   }
