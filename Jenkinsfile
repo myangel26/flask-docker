@@ -47,13 +47,13 @@ pipeline {
   
 
   stages{
-    stage('Cleanup Workspace'){
-        steps {
-            script {
-                cleanWs()
-            }
-        }
-    }
+    // stage('Cleanup Workspace'){
+    //     steps {
+    //         script {
+    //             cleanWs()
+    //         }
+    //     }
+    // }
 
     stage("TEST"){
       steps {
