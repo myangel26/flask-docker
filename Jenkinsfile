@@ -90,8 +90,8 @@ pipeline {
     stage("DEPLOY") {
       steps{
         withKubeConfig([credentialsId: "${KUBERNETES_CONFIG}"]) {
-          // sh './kubectl apply -f deployment.yml'
-          sh "./kubectl set image deployment/flask-deployment -n ${NAMESPACE} flask-app=${DOCKER_IMAGE}:${DOCKER_TAG}"
+          sh './kubectl apply -f deployment.yml'
+          // sh "./kubectl set image deployment/flask-deployment -n ${NAMESPACE} flask-app=${DOCKER_IMAGE}:${DOCKER_TAG}"
         }
       }
     }
